@@ -1,0 +1,368 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ===========================================================================
+   Relay — webhook delivery console
+   Aesthetic: "signal instrument". Near-black brushed-glass panels, a warm
+   amber signal accent, mint for success, hairline structure, and a quiet
+   grain + aurora atmosphere. Every surface should feel lit from above.
+   =========================================================================== */
+
+:root {
+  /* structure — deep, slightly cool near-black */
+  --bg: #070809;
+  --panel: #0e1116;
+  --panel-2: #14181f;
+  --line: #1b202a;
+  --line-bright: #2c333f;
+
+  /* ink */
+  --ink: #eef1f6;
+  --mut: #98a2b2;
+  --dim: #596475;
+
+  /* signal accents — jewel-toned, not neon */
+  --amber: #ffb43d;
+  --amber-deep: #c9860f;
+  --grn: #34e3a3;
+  --red: #ff6474;
+  --blu: #6aa6ff;
+
+  /* shadcn tokens, mapped onto the Relay dark palette */
+  --background: #070809;
+  --foreground: #eef1f6;
+  --card: #0e1116;
+  --card-foreground: #eef1f6;
+  --popover: #14181f;
+  --popover-foreground: #eef1f6;
+  --primary: #ffb43d;
+  --primary-foreground: #0b0d10;
+  --secondary: #14181f;
+  --secondary-foreground: #eef1f6;
+  --muted: #14181f;
+  --muted-foreground: #98a2b2;
+  --accent: #1a1f28;
+  --accent-foreground: #eef1f6;
+  --destructive: #ff6474;
+  --border: #1b202a;
+  --input: #2c333f;
+  --ring: #ffb43d;
+  --radius: 0.7rem;
+  --chart-1: #ffb43d;
+  --chart-2: #34e3a3;
+  --chart-3: #6aa6ff;
+  --chart-4: #ff6474;
+  --chart-5: #c9860f;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-panel2: var(--panel-2);
+  --color-line: var(--line);
+  --color-lineb: var(--line-bright);
+  --color-ink: var(--ink);
+  --color-mut: var(--mut);
+  --color-dim: var(--dim);
+  --color-amber: var(--amber);
+  --color-grn: var(--grn);
+  --color-red: var(--red);
+  --color-blu: var(--blu);
+  --font-sans: var(--font-sans-src), "Segoe UI", sans-serif;
+  --font-mono: var(--font-mono-src), "JetBrains Mono", monospace;
+  --font-heading: var(--font-sans-src), "Segoe UI", sans-serif;
+
+  /* shadcn color + radius scale */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--bg);
+  /* aurora glow up top + a whisper of a dot grid */
+  background-image:
+    radial-gradient(72% 46% at 50% -10%, rgba(255, 180, 61, 0.09), transparent 60%),
+    radial-gradient(56% 42% at 86% -6%, rgba(106, 166, 255, 0.07), transparent 58%),
+    radial-gradient(circle at 1px 1px, rgba(150, 164, 186, 0.045) 1px, transparent 0);
+  background-size: 100% 100%, 100% 100%, 30px 30px;
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: var(--font-sans-src), "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* fine film grain over the whole viewport */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='140'%20height='140'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.85'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+::selection {
+  background: rgba(255, 180, 61, 0.32);
+  color: #fff;
+}
+
+/* --- Typographic helpers --------------------------------------------------- */
+
+/* uppercase archival micro-label */
+.label {
+  font-family: var(--font-mono-src), monospace;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* tabular figures for anything numeric */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Premium panel surface ------------------------------------------------- */
+/* Brushed dark glass: top-lit gradient, hairline border, inset highlight,
+   and a soft grounding shadow. */
+.surface {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.024), rgba(255, 255, 255, 0) 44%),
+    var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.045),
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    0 22px 48px -30px rgba(0, 0, 0, 0.9);
+}
+
+/* thin gradient rule used inside surfaces */
+.hair {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line-bright) 18%, var(--line-bright) 82%, transparent);
+}
+
+/* --- Status dots ----------------------------------------------------------- */
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+@keyframes pulse-dot {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 60%, transparent);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 6px transparent;
+  }
+}
+.dot-live {
+  animation: pulse-dot 1.6s ease-out infinite;
+}
+
+/* --- Feed row entrance ----------------------------------------------------- */
+@keyframes row-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+    background-color: rgba(255, 180, 61, 0.09);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    background-color: transparent;
+  }
+}
+.row-in {
+  animation: row-in 0.7s ease-out;
+}
+
+/* --- Staggered page-load rise --------------------------------------------- */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+.rise {
+  animation: rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* --- Attempt tick marks ---------------------------------------------------- */
+.tick {
+  width: 10px;
+  height: 15px;
+  border-radius: 2.5px;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.28;
+  }
+}
+.blink {
+  animation: blink 1.1s ease-in-out infinite;
+}
+
+/* --- Chrome ---------------------------------------------------------------- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-bright) transparent;
+}
+*::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--line-bright);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #3a4351;
+  background-clip: padding-box;
+}
+
+input,
+textarea,
+select {
+  outline: none;
+}
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--amber-deep);
+  box-shadow: 0 0 0 3px rgba(255, 180, 61, 0.14);
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+/* ===========================================================================
+   Landing page helpers
+   =========================================================================== */
+
+/* amber → mint gradient text for hero emphasis */
+.text-signal {
+  background: linear-gradient(100deg, var(--amber) 0%, #ffd68a 42%, var(--grn) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* generic card lift used across landing sections */
+.card-lift {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  border-color: var(--line-bright);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 24px 50px -28px rgba(0, 0, 0, 0.9);
+}
+
+/* travelling dash for the pipeline connectors */
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -22;
+  }
+}
+.dash-flow {
+  stroke-dasharray: 5 6;
+  animation: dash-flow 0.9s linear infinite;
+}
+
+/* slow drifting conic sheen for the CTA plate */
+@keyframes spin-slow {
+  to {
+    transform: rotate(1turn);
+  }
+}
+.sheen {
+  animation: spin-slow 14s linear infinite;
+}
+
+/* marquee for the logo/tech strip */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee {
+  animation: marquee 26s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dash-flow,
+  .sheen,
+  .marquee,
+  .dot-live {
+    animation: none !important;
+  }
+}
